@@ -10,11 +10,11 @@ const index = (req, res) => {
 // Show
 const show = (req, res) => {
   const id = parseInt(req.params.id);
-  if (id >= 0 && id < posts.length) {
-    res.json(posts[id - 1]);
-  } else {
-    res.status(404).json({ error: "Indice non valido" })
+  const post = posts.find(item => item.id === id)
+  if (!post) {
+    return res.status(404).json({ error: "404 Not Found", message: "Post non trovato" })
   }
+  res.json(post)
 }
 
 
