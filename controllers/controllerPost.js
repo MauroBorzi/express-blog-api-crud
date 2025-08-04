@@ -1,3 +1,6 @@
+// importiamo l'array
+const posts = require(`../data/postsList.js`)
+
 // Index
 const index = (req, res) => {
   res.json(posts)
