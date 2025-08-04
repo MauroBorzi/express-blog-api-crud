@@ -1,48 +1,34 @@
 // Importo express
 const express = require(`express`)
-const router = express()
+const router = express.Router()
+
+// importo il controller per i post
+const { index, show, store, update, modify, destroy } = require(`../controllers/controllerPost.js`)
 
 
 
 // Index
-router.get(`/`, (req, res) => {
-  res.json(posts)
-})
+router.get(`/`, index)
 
 
 // Show
-router.get(`/:id`, (req, res) => {
-  const id = parseInt(req.params.id);
-  if (id >= 0 && id < posts.length) {
-    res.json(posts[id - 1]);
-  } else {
-    res.status(404).json({ error: "Indice non valido" })
-  }
-})
+router.get(`/:id`, show)
 
 
 // Create
-router.post(`/`, (req, res) => {
-  res.send(`Inserisci un nuovo post`)
-})
+router.post(`/`, store)
 
 
 // Update
-router.put(`/:id`, (req, res) => {
-  res.send(`Modifica totale del post con id: ${req.params.id}`)
-})
+router.put(`/:id`, update)
 
 
 // Modify
-router.patch(`/:id`, (req, res) => {
-  res.send(`Modifica parziale del post con id: ${req.params.id}`)
-})
+router.patch(`/:id`, modify)
 
 
 // Delete
-router.delete(`/:id`, (req, res) => {
-  res.send(`Cancellazione del post con id: ${req.params.id}`)
-})
+router.delete(`/:id`, destroy)
 
 module.exports = router
 
