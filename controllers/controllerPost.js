@@ -3,7 +3,14 @@ const posts = require(`../data/postsList.js`)
 
 // Index
 const index = (req, res) => {
-  res.json(posts)
+  //  implementazione di un filtro di ricerca
+  const tags = req.query.tags
+  let filteredPost = posts
+
+  if (tags) {
+    filteredPost = posts.filter(item => item.tags.includes(tags))
+  }
+  res.json(filteredPost)
 }
 
 
