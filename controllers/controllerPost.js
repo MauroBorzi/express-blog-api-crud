@@ -36,21 +36,21 @@ const show = (req, res) => {
 const store = (req, res) => {
   const newId = posts[posts.length - 1].id + 1
 
+  const { title, content, image, tags } = req.body
+
   const newPost = {
     id: newId,
-    title: req.body.title,
-    content: req.body.content,
-    image: req.body.image,
-    tags: req.body.tags
+    title,
+    content,
+    image,
+    tags
   }
 
   posts.push(newPost)
 
   console.log(posts)
 
-  res.status(201)
-
-  res.json(newPost)
+  res.status(201).json({ result: true, message: `Inserimento avvenuto con successo` })
 }
 
 
@@ -63,6 +63,7 @@ const update = (req, res) => {
   if (!post) {
     return res.status(404).json({ error: "404 Not Found", message: "Post non trovato" })
   }
+
   post.title = req.body.title
   post.content = req.body.content
   post.image = req.body.image
@@ -83,6 +84,7 @@ const modify = (req, res) => {
   if (!post) {
     return res.status(404).json({ error: "404 Not Found", message: "Post non trovato" })
   }
+
   post.title = req.body.title
 
   console.log(posts)
