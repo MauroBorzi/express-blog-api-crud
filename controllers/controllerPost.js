@@ -8,7 +8,9 @@ const index = (req, res) => {
   let filteredPost = posts
 
   if (tags) {
-    filteredPost = posts.filter(item => item.tags.includes(tags))
+    filteredPost = posts.filter(item => {
+      return item.tags.map(tags => tags.toLowerCase()).includes(tags.toLowerCase())
+    })
   }
   res.json(filteredPost)
 }
