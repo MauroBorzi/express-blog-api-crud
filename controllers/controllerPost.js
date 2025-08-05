@@ -5,6 +5,7 @@ const posts = require(`../data/postsList.js`)
 const index = (req, res) => {
   //  implementazione di un filtro di ricerca
   const tags = req.query.tags
+
   let filteredPost = posts
 
   if (tags) {
@@ -12,6 +13,7 @@ const index = (req, res) => {
       return item.tags.map(tags => tags.toLowerCase()).includes(tags.toLowerCase())
     })
   }
+
   res.json(filteredPost)
 }
 
@@ -19,10 +21,13 @@ const index = (req, res) => {
 // Show
 const show = (req, res) => {
   const id = parseInt(req.params.id);
+
   const post = posts.find(item => item.id === id)
+
   if (!post) {
     return res.status(404).json({ error: "404 Not Found", message: "Post non trovato" })
   }
+
   res.json(post)
 }
 
@@ -30,6 +35,7 @@ const show = (req, res) => {
 // Create
 const store = (req, res) => {
   const newId = posts[posts.length - 1].id + 1
+
   const newPost = {
     id: newId,
     title: req.body.title,
@@ -37,37 +43,67 @@ const store = (req, res) => {
     image: req.body.image,
     tags: req.body.tags
   }
+
   posts.push(newPost)
+
   console.log(posts)
+
   res.status(201)
+
   res.json(newPost)
 }
 
 
 // Update
 const update = (req, res) => {
-  res.send(`Modifica totale del post con id: ${req.params.id}`)
+  const id = parseInt(req.params.id);
+
+  const post = posts.find(item => item.id === id)
+
+  if (!post) {
+    return res.status(404).json({ error: "404 Not Found", message: "Post non trovato" })
+  }
+  post.title = req.body.title
+  post.content = req.body.content
+  post.image = req.body.image
+  post.tags = req.body.tags
+
+  console.log(posts)
+
+  res.json(post)
 }
 
 
 // Modify
 const modify = (req, res) => {
-  res.send(`Modifica parziale del post con id: ${req.params.id}`)
+  const id = parseInt(req.params.id);
+
+  const post = posts.find(item => item.id === id)
+
+  if (!post) {
+    return res.status(404).json({ error: "404 Not Found", message: "Post non trovato" })
+  }
+  post.title = req.body.title
+
+  console.log(posts)
+
+  res.json(post)
 }
 
 
 // Delete
 const destroy = (req, res) => {
   const id = parseInt(req.params.id);
+
   const post = posts.find(item => item.id === id)
+
   if (!post) {
     return res.status(404).json({ error: "404 Not Found", message: "Post non trovato" })
   }
+
   posts.splice(posts.indexOf(post), 1)
 
   res.sendStatus(204)
-
-  console.log(posts)
 }
 
 
