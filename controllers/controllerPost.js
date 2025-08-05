@@ -29,6 +29,7 @@ const show = (req, res) => {
 
 // Create
 const store = (req, res) => {
+  console.log(req.body)
   res.send(`Inserisci un nuovo post`)
 }
 
