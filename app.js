@@ -5,6 +5,9 @@ const port = 3000
 // Richiamo le rotte di post
 const postRouters = require(`./routers/posts.js`)
 
+// richiamo i middleware
+const errorHandler = require(`./middlewares/errorHandler.js`)
+
 
 app.use(express.static(`public`))
 app.use(express.json())
@@ -17,6 +20,7 @@ app.get('/', (req, res) => {
 
 app.use(`/posts`, postRouters)
 
+app.use(errorHandler)
 
 app.listen(port, () => {
   console.log(`Il server rimane in ascolto sulla porta ${port}`)
